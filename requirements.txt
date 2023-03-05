@@ -1,6 +1,7 @@
 numpy
+flask
 matplotlib
 opencv-python
-PyQt5
-#paho-mqtt
+#PyQt5
+paho-mqtt
 wlkata-mirobot-python
