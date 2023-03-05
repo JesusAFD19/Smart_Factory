@@ -10,5 +10,4 @@ Pasos para instalar el **entorno virtual del proyecto**:
 
 ## Ejecución
 Instrucciones para **ejecutar la aplicación** web hecha en Flask:
-1. Moverse al directorio de la app `cd src`
-2. Activar el servidor `flask run`
+1. `python3 app.py`
