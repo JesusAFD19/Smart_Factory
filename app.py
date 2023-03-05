@@ -1,5 +1,5 @@
 # Librerías
-from flask import Flask
+from flask import Flask, render_template
 
 
 # Nueva instancia de Flask
@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 # Funciones
 @app.route('/')
-def hello():
-    return 'Hello World Flask'
+def index():
+    return render_template('index.html')
 
 
 # Ejecución de la aplicación
