@@ -9,7 +9,8 @@ app = Flask(__name__)
 # Funciones
 @app.route('/')
 def index():
-    return render_template('index.html')
+    list = ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']
+    return render_template('index.html', list=list)
 
 
 # Ejecución de la aplicación
