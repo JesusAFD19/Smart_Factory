@@ -2,7 +2,13 @@
 
 {% block content %}
     <h2>Selecciona una figura</h2>
-    {% for value in list %}
-        <div class="card">{{ value }}.png</div>
-    {% endfor %}
+    <form method="post">
+        {% for value in list %}
+            <div class="card">
+                <input type="radio" id="input_{{value}}" name="picture_selection" value="{{value}}">
+                <label for="input_{{value}}">{{value}}</label>
+            </div>
+        {% endfor %}
+        <button type="submit">Enviar</button>
+    </form>
 {% endblock %}
