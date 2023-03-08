@@ -10,20 +10,17 @@
                 </div>
             </div>
             <div class="section2">
-                <table>
-                {% for i in range(list|length) %}
-                    <tr>
-                        {% for j in range(list[i]|length) %}
-                            <td>
-                                <div class="card">
-                                    <input type="radio" id="input_{{list[i][j]}}" name="picture_selection" value="{{list[i][j]}}">
-                                    <label for="input_{{list[i][j]}}">{{list[i][j]}}</label>
-                                </div>
-                            </td>
-                        {% endfor %}
-                    </tr>
+                {% for value in list %}
+                    <div class="card">
+                        <div class="card_content">
+                            <input type="radio" id="input_{{value}}" name="picture_selection" value="{{value}}">
+                            <div class="image">
+                                <img src="../static/imgs/{{value}}.png">
+                            </div>
+                            <label for="input_{{value}}">{{value}}</label>
+                        </div>
+                    </div>
                 {% endfor %}
-                </table>
             </div>
         </form>
     </div>
