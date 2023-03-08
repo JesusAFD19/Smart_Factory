@@ -1,14 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Selecciona una figura</h2>
-    <form method="post">
-        {% for value in list %}
-            <div class="card">
-                <input type="radio" id="input_{{value}}" name="picture_selection" value="{{value}}">
-                <label for="input_{{value}}">{{value}}</label>
+    <div class="form">
+        <form method="post">
+            <div class="section1">
+                <div class="header">
+                    <h2>Selecciona una figura</h2>
+                    <button type="submit">Enviar</button>
+                </div>
             </div>
-        {% endfor %}
-        <button type="submit">Enviar</button>
-    </form>
+            <div class="section2">
+                <table>
+                {% for i in range(list|length) %}
+                    <tr>
+                        {% for j in range(list[i]|length) %}
+                            <td>
+                                <div class="card">
+                                    <input type="radio" id="input_{{list[i][j]}}" name="picture_selection" value="{{list[i][j]}}">
+                                    <label for="input_{{list[i][j]}}">{{list[i][j]}}</label>
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </form>
+    </div>
 {% endblock %}

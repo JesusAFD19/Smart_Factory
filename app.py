@@ -28,6 +28,9 @@ def send_mqtt(topic, message):
     client.disconnect()
     print(f'MQTT => Petición {topic} enviada')
 
+def format_list(list):
+    return [list[i:i + 4] for i in range(0, len(list), 4)]
+
 
 # Renderización de index como página principal
 @app.route('/', methods=['GET', 'POST'])
@@ -41,7 +44,7 @@ def index():
         send_mqtt(picture_selection,picture_selection)
 
     # Renderizamos index.html pasandole la lista de figuras
-    return render_template('index.html', list=list)
+    return render_template('index.html', list=format_list(list))
 
 
 # Ejecución de la aplicación
