@@ -5,7 +5,7 @@ frontend/.env
 .DS_Store
 
 # Python dependencies
-backend/venv/
+venv/
 backend/__pycache__/
 backend/*.pyc
 
