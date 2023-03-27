@@ -38,7 +38,7 @@ def index():
     # Si se envía el formulario de index.html
     if request.method == 'POST':
         picture_selection = request.form['picture_selection']
-        send_mqtt(picture_selection,picture_selection)
+        send_mqtt('/Assembly',picture_selection)
 
     # Renderizamos index.html pasandole la lista de figuras
     return render_template('index.html', list=list)
