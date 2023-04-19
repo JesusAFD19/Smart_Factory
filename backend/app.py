@@ -1,5 +1,5 @@
 # Librerías
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import paho.mqtt.client as mqtt
 
 
@@ -38,11 +38,17 @@ def index():
     # Si se envía el formulario de index.html
     if request.method == 'POST':
         picture_selection = request.form['picture_selection']
-        send_mqtt('/Assembly',picture_selection)
+        return redirect(url_for('order', selected=picture_selection))
 
     # Renderizamos index.html pasandole la lista de figuras
     return render_template('index.html', list=list)
 
+# Renderización de template: Ordenamiento
+@app.route('/order/<selected>', methods=['GET', 'POST'])
+def order(selected):
+    pieces = ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']
+    return render_template('order.html', selection=selected, pieces=pieces)
+    #send_mqtt('/Assembly',picture_selection)
 
 # Ejecución de la aplicación
 if __name__ == '__main__':
