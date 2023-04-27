@@ -46,9 +46,23 @@ def index():
 # Renderización de template: Ordenamiento
 @app.route('/order/<selected>', methods=['GET', 'POST'])
 def order(selected):
-    pieces = ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']
+    pieces = ['romboide-blue','square-yellow','triangle-blue','triangle-brown','triangle-green','triangle-orange','triangle-red']
+
+    # Retornamos la figura seleccionada + el orden de las figuras
+    if request.method == 'POST':
+        instructions = [selected,
+                   request.form['option1'],
+                   request.form['option2'],
+                   request.form['option3'],
+                   request.form['option4'],
+                   request.form['option5'],
+                   request.form['option6'],
+                   request.form['option7']]
+        print('/'.join(instructions))
+        send_mqtt('/Assembly','-'.join(instructions))
+
+    # Renderizamos index.html pasandole la lista de piezas
     return render_template('order.html', selection=selected, pieces=pieces)
-    #send_mqtt('/Assembly',picture_selection)
 
 # Ejecución de la aplicación
 if __name__ == '__main__':

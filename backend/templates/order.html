@@ -1,5 +1,84 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{selection}}</h1>
+    <form method="post" id="oderForm">
+        <div class="section1">
+            <div class="header">
+                <h2>Selecciona el orden de las piezas para: {{selection}}</h2>
+                <button type="submit">Enviar</button>
+            </div>
+        </div>
+        <div class="section2">
+            <div class="card" id="block_1">
+                <div class="card_content">
+                    <h3>1:</h3>
+                    <select name="option1">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card" id="block_2">
+                <div class="card_content">
+                    <h3>2:</h3>
+                    <select name="option2">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card" id="block_3">
+                <div class="card_content">
+                    <h3>3:</h3>
+                    <select name="option3">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card" id="block_4">
+                <div class="card_content">
+                    <h3>4:</h3>
+                    <select name="option4">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card" id="block_5">
+                <div class="card_content">
+                    <h3>5:</h3>
+                    <select name="option5">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card" id="block_6">
+                <div class="card_content">
+                    <h3>1:</h3>
+                    <select name="option6">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card" id="block_7">
+                <div class="card_content">
+                    <h3>7:</h3>
+                    <select name="option7">
+                        {% for value in pieces %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}
