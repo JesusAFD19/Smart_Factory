@@ -1,5 +1,6 @@
 # Librerías
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_cors import CORS
 import paho.mqtt.client as mqtt
 
 
@@ -28,41 +29,12 @@ def send_mqtt(topic, message):
     client.disconnect()
     print(f'MQTT => Petición {topic} enviada')
 
-
-# Renderización de index como página principal
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    # Lista de opciones a renderizar
-    list = ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']
-
-    # Si se envía el formulario de index.html
-    if request.method == 'POST':
-        picture_selection = request.form['picture_selection']
-        return redirect(url_for('order', selected=picture_selection))
-
-    # Renderizamos index.html pasandole la lista de figuras
-    return render_template('index.html', list=list)
-
-# Renderización de template: Ordenamiento
-@app.route('/order/<selected>', methods=['GET', 'POST'])
-def order(selected):
-    pieces = ['romboide-blue','square-yellow','triangle-blue','triangle-brown','triangle-green','triangle-orange','triangle-red']
-
-    # Retornamos la figura seleccionada + el orden de las figuras
-    if request.method == 'POST':
-        instructions = [selected,
-                   request.form['option1'],
-                   request.form['option2'],
-                   request.form['option3'],
-                   request.form['option4'],
-                   request.form['option5'],
-                   request.form['option6'],
-                   request.form['option7']]
-        print('/'.join(instructions))
-        send_mqtt('/Assembly','-'.join(instructions))
-
-    # Renderizamos index.html pasandole la lista de piezas
-    return render_template('order.html', selection=selected, pieces=pieces)
+# Cards API Route
+@app.route('/cards')
+def get_cards():
+    # Lista de cartas a renderizar
+    data = {'Cards': ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']}
+    return jsonify(data=data)
 
 # Ejecución de la aplicación
 if __name__ == '__main__':

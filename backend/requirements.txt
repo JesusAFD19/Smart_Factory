@@ -1,5 +1,6 @@
 numpy
 flask
+flask_cors
 matplotlib
 opencv-python
 #PyQt5
