@@ -1,6 +1,8 @@
 /* Componente de Botón personalizable */
-export const CustomButton = () => {
+export const CustomButton = ({text, customClass, func, disabled}) => {
   return (
-    <div>CustomButton</div>
+    <button className={customClass} onClick={func} disabled={disabled}>
+      {text}
+    </button>
   )
 }

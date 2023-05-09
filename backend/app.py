@@ -1,12 +1,14 @@
 # Librerías
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 import paho.mqtt.client as mqtt
 
 
 # Nueva instancia de Flask
 app = Flask(__name__)
-
+CORS(app, origins=['http://localhost:3000'])
+CORS(app, methods=['GET', 'POST'])
+CORS(app, headers=['Content-Type', 'Authorization'])
 
 # Funciones
 def send_mqtt(topic, message):
@@ -33,8 +35,14 @@ def send_mqtt(topic, message):
 @app.route('/cards')
 def get_cards():
     # Lista de cartas a renderizar
-    data = {'Cards': ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']}
-    return jsonify(data=data)
+    return {'Shapes': ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree'],
+            'Pieces': ["r-blue", "s-yellow", "t-blue", "t-brown", "t-green", "t-orange", "t-red"],
+        }
+
+@app.route('/cards/<folder>/<image>')
+def get_image(folder, image):
+    # Retornamos imagen de carta
+    return send_from_directory('static/'+folder, image)
 
 # Ejecución de la aplicación
 if __name__ == '__main__':

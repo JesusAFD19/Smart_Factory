@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*Card styles*/
+.card{
+  background-color: #f1f1f1;
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  width: fit-content;
+  margin: 1rem;
+  padding: 15px;
+  transition: all 400ms ease;
+}
+.card:hover{
+  transform: translateY(-1rem);
+  box-shadow: 0px 3px 20px rgba(21, 161, 255, 0.623);
+}
+.card-image{
+  height: 12rem;
+  width: 12rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.card-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/*Build form section-01*/
+.dragging{
+  box-shadow: 0px 3px 20px rgba(255, 239, 21, 0.623);
+}
