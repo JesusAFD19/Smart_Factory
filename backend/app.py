@@ -1,48 +1,61 @@
 # Librerías
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import paho.mqtt.client as mqtt
-
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 # Nueva instancia de Flask
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:3000'])
-CORS(app, methods=['GET', 'POST'])
-CORS(app, headers=['Content-Type', 'Authorization'])
+CORS(app, origins=[os.getenv('FRONTEND_SERVER')], methods=['GET', 'POST'], headers=['Content-Type', 'Authorization'])
+
+# Variables
+shapes = ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree']
+piecesDict = {
+    'r-blue' : '^',
+    's-yellow' : 'I',
+    't-purple' : '7',
+    't-brown' : '3',
+    't-green' : 't',
+    't-orange' : 'U',
+    't-red' : 'r',
+}
+mqtt_client = mqtt.Client()
+#broker_address = "34.125.48.250"
+mqtt_client.connect("broker.mqttdashboard.com", 1883, 60)
 
 # Funciones
+def format_message(message):
+    hashed_msg = [piecesDict[piece] for piece in message.split('/')]
+    return hashed_msg
+
 def send_mqtt(topic, message):
-    client = mqtt.Client()
-    #broker_address = "34.125.48.250"
-    client.connect("broker.mqttdashboard.com", 1883, 60)
-
-    # Cliente MQTT debe esperar una confirmación del broker MQTT
-    sent = False
-    def on_publish(client, userdata, mid):
-        nonlocal sent
-        sent = True
-    client.on_publish = on_publish
-
-    # Publicar el mensaje y esperar una confirmación
-    client.publish(topic, message)
-    while not sent:
-        client.loop()
-
-    client.disconnect()
+    mqtt_client.publish(topic, message)
+    mqtt_client.disconnect()
     print(f'MQTT => Petición {topic} enviada')
+    print(f'... {message}')
 
 # Cards API Route
 @app.route('/cards')
 def get_cards():
     # Lista de cartas a renderizar
-    return {'Shapes': ['Bird','Cat','Fish','House','Plane','Rocket','Swan','Tree'],
-            'Pieces': ["r-blue", "s-yellow", "t-blue", "t-brown", "t-green", "t-orange", "t-red"],
-        }
-
+    return {
+        'Shapes': shapes,
+        'Pieces': list(piecesDict),
+    }
 @app.route('/cards/<folder>/<image>')
 def get_image(folder, image):
     # Retornamos imagen de carta
     return send_from_directory('static/'+folder, image)
+
+# SendMqtt API Route
+@app.route('/sendMqtt', methods=['POST'])
+def send_message():
+    message = request.json.get('message')
+    message['pieces'] = format_message(message['pieces'])
+    send_mqtt('assembly', message['shape'] + '/' + '/'.join(message['pieces']))
+    return jsonify('String recibido con éxito')
 
 # Ejecución de la aplicación
 if __name__ == '__main__':
