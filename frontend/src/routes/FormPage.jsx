@@ -5,7 +5,7 @@ export const FormPage = () => {
 
   // Form Cards
   const [data, setData] = useState([])
-  const [shape, setShape] = useState(null)
+  const [selected, setSelected] = useState(null)
   const [pieces, setPieces] = useState([])
   const [step, setStep] = useState(0);
   const API = process.env.REACT_APP_API;
@@ -34,11 +34,28 @@ export const FormPage = () => {
     setStep(step - 1);
   }
   const handleCardSelect = (parentId) => {
-    setShape(parentId)
+    setSelected(parentId)
   }
+  const sendToBack = async (route, msg) => {
+    try {
+      const response = await fetch(`${API}${route}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: msg }),
+      });
+  
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleSubmit = (e) => {
-    let message = shape + '/' + pieces.join('/')
+    let message = { shape: selected, pieces: pieces.join('/')}
     console.log(message)
+    sendToBack('/sendMqtt',message)
     setStep(step + 1)
   }
 
@@ -58,7 +75,7 @@ export const FormPage = () => {
                   data.Shapes.map((shape, i) => (
                     <CustomCard key={`shape_${i}`}
                       id={shape}
-                      customClass='card'
+                      customClass={`card ${selected === shape ? 'selected' : ''}`}
                       handleClick={handleCardSelect}
                       cardImage={<img src={`${API}/cards/shapes/${shape}.png`} alt={`img_${shape}`}/>}
                     />
