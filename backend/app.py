@@ -32,7 +32,6 @@ def format_message(message):
 
 def send_mqtt(topic, message):
     mqtt_client.publish(topic, message)
-    mqtt_client.disconnect()
     print(f'MQTT => Petición {topic} enviada')
     print(f'... {message}')
 
