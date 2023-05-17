@@ -18,3 +18,4 @@ backend/*.pyc
 
 # Other
 .DS_Store
+.env
