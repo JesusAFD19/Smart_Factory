@@ -6,3 +6,4 @@ opencv-python
 #PyQt5
 paho-mqtt
 wlkata-mirobot-python
+python-dotenv
