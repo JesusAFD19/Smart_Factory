@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import { CustomNavbar, CustomButton, CustomCard, DraggableItem, Footer, Loading } from '../components/components'
+import { CustomNavbar, CustomButton, CustomCard, Footer, Loading, Drag, Drop } from '../components/components'
 
 export const FormPage = () => {
 
   // Form Cards
-  const [data, setData] = useState([{}])
+  const [data, setData] = useState([])
+  const [shape, setShape] = useState(null)
+  const [pieces, setPieces] = useState([])
   const [step, setStep] = useState(0);
   const API = process.env.REACT_APP_API;
 
@@ -16,26 +18,29 @@ export const FormPage = () => {
     .then(
       data => {
         setData(data)
-        console.log(data)
+        setPieces(data.Pieces)
       }
     )
   }, [API])
 
+
   // Funcionalidades de formulario multi-step
-  const resetFields = () => {
-    //
-  }
   const handleNextStep = (e) => {
-    e.preventDefault();
-    setStep(step + 1);
-  };
+    e.preventDefault()
+    setStep(step + 1)
+  }
   const handlePrevStep = (e) => {
     e.preventDefault();
-    if (step === 1) {
-      resetFields();
-    }
     setStep(step - 1);
-  };
+  }
+  const handleCardSelect = (parentId) => {
+    setShape(parentId)
+  }
+  const handleSubmit = (e) => {
+    let message = shape + '/' + pieces.join('/')
+    console.log(message)
+    setStep(step + 1)
+  }
 
   return (
     <section id='BuildForm'>
@@ -52,7 +57,9 @@ export const FormPage = () => {
                 ) : (
                   data.Shapes.map((shape, i) => (
                     <CustomCard key={`shape_${i}`}
+                      id={shape}
                       customClass='card'
+                      handleClick={handleCardSelect}
                       cardImage={<img src={`${API}/cards/shapes/${shape}.png`} alt={`img_${shape}`}/>}
                     />
                   ))
@@ -66,19 +73,31 @@ export const FormPage = () => {
             <div id="step-1">
               <h2>selecciona el orden de las piezas</h2>
               <div className="cards">
-                {(typeof data.Pieces === 'undefined') ? (
+                {(typeof pieces === 'undefined') ? (
                   <Loading/>
                 ) : (
-                  data.Pieces.map((piece, i) => (
-                    <CustomCard key={`piece_${i}`}
-                      customClass='card' 
-                      cardImage={<img src={`${API}/cards/pieces/${piece}.jpg`} alt={`img_${piece}`}/>}
-                    />
-                  ))
+
+                  <Drop direction='horizontal' items={pieces} setItems={setPieces}
+
+                    dragItems = {
+                      pieces.map((piece, i) => (
+                        <Drag key={`${i}`} id={piece} draggableId={`${i}`} index={i}
+                          item={
+                            <CustomCard
+                              customClass='card'
+                              cardImage={<img src={`${API}/cards/pieces/${piece}.jpg`} alt={`img_${piece}`}/>}
+                            />
+                          }
+                        ></Drag>
+                      ))
+                    }
+                  
+                  ></Drop>
+
                 )}
               </div>
               <CustomButton text={'Atras'} func={handlePrevStep}/>
-              <CustomButton text={'Siguiente'} func={handleNextStep}/>
+              <CustomButton text={'Siguiente'} func={handleSubmit}/>
             </div>
           )}
 
