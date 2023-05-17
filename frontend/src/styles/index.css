@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/*Card styles*/
+.droppable{
+  padding: 1rem;
+} 
+.card{
+  background-color: #f1f1f1;
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  width: fit-content;
+  padding: 1rem;
+  margin: 0 0 15px 0;
+  transition: all 400ms ease;
+}
+.card:hover{
+  box-shadow: 0px 3px 20px rgba(21, 161, 255, 0.623);
+  transform: translateY(-1rem);
+}
+.selected{
+  box-shadow: 0px 3px 20px rgba(21, 161, 255, 0.623);
+}
+.card-image{
+  height: 12rem;
+  width: 12rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.card-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/*Build form section-01*/
+#step-1 .card-image{
+  height: 4rem;
+  width: 4rem;
+}
+/*#step-1 .cards{
+  width: 100%;
+}*/
+#step-1 .card .card-content{
+  display: none;
+}
+/*
+@media screen and (max-width: 1105px) {
+  .card:hover{
+    transform: translateY(0);
+    scale: 1.05;
+  }
+  #step-1 .card{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+  }
+  #step-1 .card .card-image{
+    padding: 1rem;
+  }
+  #step-1 .card .card-content{
+    display: block;
+  }
+  #step-1 .container section{
+    width: 400px;
+    flex-direction: column;
+  }
+  #step-1 .container .cards article{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+}
+*/

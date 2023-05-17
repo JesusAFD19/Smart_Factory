@@ -1,0 +1,21 @@
+# Node.js dependencies
+frontend/node_modules/
+frontend/build/
+frontend/.env
+.DS_Store
+
+# Python dependencies
+venv/
+backend/__pycache__/
+backend/*.pyc
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# Log files
+*.log
+
+# Other
+.DS_Store
+.env
