@@ -22,8 +22,8 @@ piecesDict = {
     't-red' : 'r',
 }
 mqtt_client = mqtt.Client()
-#broker_address = "34.125.48.250"
-mqtt_client.connect("broker.mqttdashboard.com", 1883, 60)
+broker_address = os.getenv('BROCKER_MQRTT')
+mqtt_client.connect(broker_address, 1883, 60)
 
 # Funciones
 def format_message(message):
