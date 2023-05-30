@@ -1,29 +1,12 @@
-import { useState, useEffect } from 'react'
 import { CustomNavbar, CustomButton, CustomCard, Footer, Loading, Drag, Drop } from '../components/components'
 import useMultiStepForm from '../hooks/useMultiStepForm';
+import useCardData from '../hooks/useCardData';
 
 export const FormPage = () => {
 
-  const API = process.env.REACT_APP_API; 
-  // Form Cards
-  const [data, setData] = useState([])
-  const [selected, setSelected] = useState(null)
-  const [pieces, setPieces] = useState([])
+  const API = process.env.REACT_APP_API;
+  const { data, selected, setSelected, pieces, setPieces } = useCardData(API);
   const { step, handleNextStep, handlePrevStep } = useMultiStepForm();
-
-  // Se ejecuta cuando se renderiza el componente
-  useEffect(() => {
-    fetch(`${API}/cards`).then(
-      res => res.json()
-    )
-    .then(
-      data => {
-        setData(data)
-        setPieces(data.Pieces)
-      }
-    )
-  }, [API])
-
 
   // Funcionalidades de formulario multi-step
   const handleCardSelect = (parentId) => {
