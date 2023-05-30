@@ -1,6 +1,7 @@
 import { CustomNavbar, CustomButton, CustomCard, Footer, Loading, Drag, Drop } from '../components/components'
 import useMultiStepForm from '../hooks/useMultiStepForm';
 import useCardData from '../hooks/useCardData';
+import sendToBack from '../helpers/sendToBack';
 
 export const FormPage = () => {
 
@@ -12,25 +13,9 @@ export const FormPage = () => {
   const handleCardSelect = (parentId) => {
     setSelected(parentId)
   }
-  const sendToBack = async (route, msg) => {
-    try {
-      const response = await fetch(`${API}${route}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: msg }),
-      });
-  
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const handleSubmit = (e) => {
     let message = { shape: selected, pieces: pieces.join('/')}
-    sendToBack('/sendMqtt',message)
+    sendToBack(`${API}/sendMqtt`,message)
     handleNextStep(e);
   }
 
