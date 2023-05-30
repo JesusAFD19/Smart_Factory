@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import { CustomNavbar, CustomButton, CustomCard, Footer, Loading, Drag, Drop } from '../components/components'
+import useMultiStepForm from '../hooks/useMultiStepForm';
 
 export const FormPage = () => {
 
+  const API = process.env.REACT_APP_API; 
   // Form Cards
   const [data, setData] = useState([])
   const [selected, setSelected] = useState(null)
   const [pieces, setPieces] = useState([])
-  const [step, setStep] = useState(0);
-  const API = process.env.REACT_APP_API;
+  const { step, handleNextStep, handlePrevStep } = useMultiStepForm();
 
   // Se ejecuta cuando se renderiza el componente
   useEffect(() => {
@@ -25,14 +26,6 @@ export const FormPage = () => {
 
 
   // Funcionalidades de formulario multi-step
-  const handleNextStep = (e) => {
-    e.preventDefault()
-    setStep(step + 1)
-  }
-  const handlePrevStep = (e) => {
-    e.preventDefault();
-    setStep(step - 1);
-  }
   const handleCardSelect = (parentId) => {
     setSelected(parentId)
   }
@@ -54,9 +47,8 @@ export const FormPage = () => {
   };
   const handleSubmit = (e) => {
     let message = { shape: selected, pieces: pieces.join('/')}
-    console.log(message)
     sendToBack('/sendMqtt',message)
-    setStep(step + 1)
+    handleNextStep(e);
   }
 
   return (
