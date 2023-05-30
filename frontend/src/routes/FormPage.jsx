@@ -1,6 +1,7 @@
 import { CustomNavbar, CustomButton, CustomCard, Footer, Loading, Drag, Drop } from '../components/components'
 import useMultiStepForm from '../hooks/useMultiStepForm';
 import useCardData from '../hooks/useCardData';
+import useMediaQuery from '../hooks/useMediaQuery';
 import sendToBack from '../helpers/sendToBack';
 
 export const FormPage = () => {
@@ -8,6 +9,9 @@ export const FormPage = () => {
   const API = process.env.REACT_APP_API;
   const { data, selected, setSelected, pieces, setPieces } = useCardData(API);
   const { step, handleNextStep, handlePrevStep } = useMultiStepForm();
+
+  // Media query que dicta orientación de drag and drop
+  const dndVertical = useMediaQuery('(max-width: 800px)');
 
   // Funcionalidades de formulario multi-step
   const handleCardSelect = (parentId) => {
@@ -54,7 +58,9 @@ export const FormPage = () => {
                   <Loading/>
                 ) : (
 
-                  <Drop direction='horizontal' items={pieces} setItems={setPieces}
+                  <Drop
+                    direction={dndVertical ? 'vertical' : 'horizontal'}
+                    items={pieces} setItems={setPieces}
 
                     dragItems = {
                       pieces.map((piece, i) => (
