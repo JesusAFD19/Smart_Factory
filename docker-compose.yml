@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    container_name: c_postgres
+    restart: always
+    ports:
+      - '127.0.0.1:5432:5432'
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=smart-factory-123
+      - POSTGRES_DB=smartFactoryDb
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: c_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'smart.factory@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'smart-factory-123'
+      PGADMIN_DEFAULT_SERVER: c_postgres
+    ports:
+      - '80:80'
+    depends_on:
+      - postgres
