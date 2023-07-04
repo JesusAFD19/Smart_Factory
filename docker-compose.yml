@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  backend:
+    container_name: c_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./backend:/app/backend
+    # command: sh -c "source backend/venv/bin/activate && python backend/app.py"
+
   postgres:
     image: postgres
     container_name: c_postgres

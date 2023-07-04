@@ -35,6 +35,10 @@ def send_mqtt(topic, message):
     print(f'MQTT => Petición {topic} enviada')
     print(f'... {message}')
 
+@app.route('/')
+def initial_server():
+    return 'Backend is working'
+
 # Cards API Route
 @app.route('/cards')
 def get_cards():

@@ -19,3 +19,7 @@ backend/*.pyc
 # Other
 .DS_Store
 .env
+
+# Docker container
+frontend/node_modules/
+backend/venv/
