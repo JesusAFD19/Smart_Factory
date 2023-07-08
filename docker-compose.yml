@@ -16,22 +16,21 @@ services:
     image: postgres
     container_name: c_postgres
     restart: always
-    ports:
-      - '127.0.0.1:5432:5432'
     environment:
-      - DATABASE_HOST=127.0.0.1
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=smartFactoryDb
+      - POSTGRES_DB=${POSTGRES_DB}
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: c_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-      PGADMIN_DEFAULT_SERVER: c_postgres
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_USER}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_DEFAULT_SERVER=c_postgres
     ports:
       - '80:80'
     depends_on:
       - postgres
+    links:
+      - postgres:pgadmin_server
